@@ -250,7 +250,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         name: customer_name,
         phone_number: customer_phone,
         tx_ref,
-        redirect_url: redirect_url || `${process.env.FRONTEND_URL || 'http://localhost:3000'}/payment-success`,
+        redirect_url: redirect_url || `${process.env.FRONTEND_URL}/payment-success`,
         payment_options: 'card,mobilemoney,banktransfer,ussd',
       });
       
@@ -331,8 +331,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         currency: 'USD',
         order_id: orderId,
         customer_email: req.body.email || 'customer@rubikcongames.xyz',
-        redirect_url: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/payment-success`,
-        webhook_url: `${process.env.BACKEND_URL || 'http://localhost:5000'}/api/webhook/coinbase`,
+        redirect_url: `${process.env.FRONTEND_URL}/payment-success`,
+        webhook_url: `${process.env.BACKEND_URL}/api/webhook/coinbase`,
       });
       
       req.session.pending_payment = {
