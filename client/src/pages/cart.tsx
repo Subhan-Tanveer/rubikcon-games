@@ -20,11 +20,21 @@ export default function Cart() {
   
   // Get cart items and all games
   const { data: cartItems = [], isLoading } = useQuery<CartItem[]>({
-    queryKey: ["/api/cart"],
+    queryKey: ["cart"],
+    queryFn: async () => {
+      const response = await fetch('/api/cart');
+      if (!response.ok) throw new Error('Failed to fetch cart');
+      return response.json();
+    },
   });
   
   const { data: allGames = [] } = useQuery<Game[]>({
-    queryKey: ["/api/games"],
+    queryKey: ["games"],
+    queryFn: async () => {
+      const response = await fetch('/api/games');
+      if (!response.ok) throw new Error('Failed to fetch games');
+      return response.json();
+    },
   });
   
   // Cart store operations

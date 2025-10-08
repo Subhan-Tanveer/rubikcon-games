@@ -16,7 +16,12 @@ export default function Home() {
     isLoading,
     error,
   } = useQuery<Game[]>({
-    queryKey: ["/api/games"],
+    queryKey: ["games"],
+    queryFn: async () => {
+      const response = await fetch('/api/games');
+      if (!response.ok) throw new Error('Failed to fetch games');
+      return response.json();
+    },
   });
 
   if (isLoading) {

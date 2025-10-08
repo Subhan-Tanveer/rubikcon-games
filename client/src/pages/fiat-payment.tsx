@@ -50,7 +50,7 @@ export default function FiatPayment() {
   const handlePayment = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('/api/payments/flutterwave/create', {
+      const response = await fetch('/api/payments/flutterwave', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
