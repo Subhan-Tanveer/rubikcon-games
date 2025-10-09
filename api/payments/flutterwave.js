@@ -11,6 +11,14 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
       const { amount, currency, customer_email, customer_name, customer_phone } = req.body;
+      
+      // Check if required environment variables exist
+      if (!process.env.FLUTTERWAVE_SECRET_KEY) {
+        return res.status(500).json({
+          success: false,
+          error: 'Flutterwave configuration missing'
+        });
+      }
 
       const paymentData = {
         tx_ref: `rubikcon-${Date.now()}`,
@@ -47,15 +55,19 @@ export default async function handler(req, res) {
           tx_ref: paymentData.tx_ref
         });
       } else {
+        console.error('Flutterwave API Response:', result);
         return res.status(400).json({
           success: false,
-          error: result.message || 'Payment initialization failed'
+          error: result.message || 'Payment initialization failed',
+          details: result
         });
       }
     } catch (error) {
+      console.error('Flutterwave API Error:', error);
       return res.status(500).json({
         success: false,
-        error: 'Payment service error'
+        error: 'Payment service error',
+        details: error.message
       });
     }
   }
