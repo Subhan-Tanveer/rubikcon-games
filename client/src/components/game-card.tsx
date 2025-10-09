@@ -18,10 +18,27 @@ export default function GameCard({ game }: GameCardProps) {
 
   const addToCartMutation = useMutation({
     mutationFn: async () => {
-      return apiRequest("POST", "/api/cart", {
-        gameId: game.id,
-        quantity: 1,
+      // Generate or get session ID
+      let sessionId = localStorage.getItem('sessionId');
+      if (!sessionId) {
+        sessionId = 'session-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('sessionId', sessionId);
+      }
+      
+      const response = await fetch('/api/cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Session-Id': sessionId
+        },
+        body: JSON.stringify({
+          gameId: game.id,
+          quantity: 1,
+        })
       });
+      
+      if (!response.ok) throw new Error('Failed to add to cart');
+      return response.json();
     },
     onSuccess: () => {
       // Invalidate cart queries to refresh the cart

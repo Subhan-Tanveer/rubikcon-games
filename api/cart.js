@@ -1,4 +1,10 @@
-let cartItems = [];
+// Simple session-based cart storage
+const cartSessions = new Map();
+
+function getSessionId(req) {
+  // Use a simple session ID from headers or create one
+  return req.headers['x-session-id'] || 'default-session';
+}
 
 export default function handler(req, res) {
   // Enable CORS
@@ -58,6 +64,10 @@ export default function handler(req, res) {
       }
     ];
     
+    // Get cart items for this session
+    const sessionId = getSessionId(req);
+    const cartItems = cartSessions.get(sessionId) || [];
+    
     // Join cart items with game data
     const cartWithGames = cartItems.map(item => {
       const game = games.find(g => g.id === item.gameId);
@@ -72,25 +82,35 @@ export default function handler(req, res) {
 
   if (req.method === 'POST') {
     const { gameId, quantity = 1 } = req.body;
+    const sessionId = getSessionId(req);
     
+    // Get or create cart for this session
+    if (!cartSessions.has(sessionId)) {
+      cartSessions.set(sessionId, []);
+    }
+    
+    const cartItems = cartSessions.get(sessionId);
     const existingItem = cartItems.find(item => item.gameId === gameId);
     
     if (existingItem) {
       existingItem.quantity += quantity;
     } else {
       cartItems.push({
-        sessionId: 'vercel-session',
+        id: Date.now(),
+        sessionId,
         gameId,
         quantity,
         addedAt: new Date().toISOString()
       });
     }
     
+    cartSessions.set(sessionId, cartItems);
     return res.status(200).json({ success: true, cartItems });
   }
 
   if (req.method === 'DELETE') {
-    cartItems = [];
+    const sessionId = getSessionId(req);
+    cartSessions.set(sessionId, []);
     return res.status(200).json({ success: true });
   }
 
