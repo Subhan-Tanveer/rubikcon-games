@@ -42,8 +42,8 @@ export default function Home() {
     );
   }
 
-  const cardGames = games?.filter((game) => game.isOnline === 0) || [];
-  const onlineGames = games?.filter((game) => game.isOnline === 1) || [];
+  const cardGames = games?.filter((game) => game.category === "card") || [];
+  const onlineGames = games?.filter((game) => game.category === "online") || [];
   const featuredGame =
     cardGames.find((game) => game.slug === "crypto-charades") || cardGames[0];
 

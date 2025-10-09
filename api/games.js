@@ -2,6 +2,9 @@ export default function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
@@ -16,7 +19,7 @@ export default function handler(req, res) {
         price: 1200,
         currency: "NGN",
         description: "How well do you REALLY know crypto lingo? Act out Bitcoin, DeFi...",
-        image: "/api/placeholder/300/200",
+        image: "/images/crypto-charades.png",
         category: "card"
       },
       {
@@ -26,7 +29,7 @@ export default function handler(req, res) {
         price: 1200,
         currency: "NGN",
         description: "Master the fundamentals of blockchain technology with this...",
-        image: "/api/placeholder/300/200",
+        image: "/images/blocks-hashes.png",
         category: "card"
       },
       {
@@ -36,7 +39,7 @@ export default function handler(req, res) {
         price: 1200,
         currency: "NGN",
         description: "Journey through the multiverse of cryptocurrency in this never-skip ca...",
-        image: "/api/placeholder/300/200",
+        image: "/images/cryptoverse.png",
         category: "card"
       },
       {
@@ -46,7 +49,7 @@ export default function handler(req, res) {
         price: 0,
         currency: "NGN",
         description: "Play the ultimate Web3 trivia game online with friends from around the...",
-        image: "/api/placeholder/300/200",
+        image: "/images/web3-trivia.png",
         category: "online"
       }
     ];
