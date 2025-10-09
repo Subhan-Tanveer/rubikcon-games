@@ -32,8 +32,22 @@ export default function Checkout() {
   const { toast } = useToast();
   const [, setLocation] = useLocation();
 
+  const getSessionId = () => {
+    let sessionId = localStorage.getItem('sessionId');
+    if (!sessionId) {
+      sessionId = Math.random().toString(36).substring(2, 15);
+      localStorage.setItem('sessionId', sessionId);
+    }
+    return sessionId;
+  };
+
   const { data: cartItems = [], isLoading } = useQuery<CartItem[]>({
-    queryKey: ["/api/cart"],
+    queryKey: ['cart'],
+    queryFn: () => fetch('/api/cart', {
+      headers: {
+        'X-Session-ID': getSessionId()
+      }
+    }).then(res => res.json())
   });
 
   const [showPaymentMethod, setShowPaymentMethod] = useState(false);
