@@ -19,7 +19,7 @@ export default function handler(req, res) {
         price: 1200,
         currency: "NGN",
         description: "How well do you REALLY know crypto lingo? Act out Bitcoin, DeFi...",
-        image: "https://via.placeholder.com/300x200/1a1a1a/fbbf24?text=Crypto+Charades",
+        image: "/images/card1.png",
         category: "card"
       },
       {
@@ -29,7 +29,7 @@ export default function handler(req, res) {
         price: 1200,
         currency: "NGN",
         description: "Master the fundamentals of blockchain technology with this...",
-        image: "https://via.placeholder.com/300x200/1a1a1a/fbbf24?text=Blocks+%26+Hashes",
+        image: "/images/card21.png",
         category: "card"
       },
       {
@@ -39,7 +39,7 @@ export default function handler(req, res) {
         price: 1200,
         currency: "NGN",
         description: "Journey through the multiverse of cryptocurrency in this never-skip ca...",
-        image: "https://via.placeholder.com/300x200/1a1a1a/fbbf24?text=Cryptoverse",
+        image: "/images/card3.png",
         category: "card"
       },
       {
@@ -49,7 +49,7 @@ export default function handler(req, res) {
         price: 0,
         currency: "NGN",
         description: "Play the ultimate Web3 trivia game online with friends from around the...",
-        image: "https://via.placeholder.com/300x200/1a1a1a/fbbf24?text=Web3+Trivia",
+        image: "/images/card4.png",
         category: "online"
       }
     ];
