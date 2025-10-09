@@ -33,7 +33,7 @@ export default async function handler(req, res) {
         customizations: {
           title: 'Rubikcon Games',
           description: 'Game Purchase',
-          logo: 'https://rubikcon-games.vercel.app/logo.png'
+          logo: `${process.env.FRONTEND_URL || 'https://rubikcon-games.vercel.app'}/logo.png`
         }
       };
 
