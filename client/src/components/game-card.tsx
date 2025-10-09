@@ -25,7 +25,7 @@ export default function GameCard({ game }: GameCardProps) {
     },
     onSuccess: () => {
       // Invalidate cart queries to refresh the cart
-      queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
       
       toast({
         title: "Added to cart!",
