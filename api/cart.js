@@ -14,7 +14,60 @@ export default function handler(req, res) {
   }
 
   if (req.method === 'GET') {
-    return res.status(200).json(cartItems);
+    // Get games data to join with cart items
+    const games = [
+      {
+        id: 1,
+        title: "Crypto Charades",
+        slug: "crypto-charade",
+        price: 1200,
+        currency: "NGN",
+        description: "How well do you REALLY know crypto lingo? Act out Bitcoin, DeFi...",
+        image: "/images/card1.png",
+        category: "card"
+      },
+      {
+        id: 2,
+        title: "Blocks and Hashes",
+        slug: "blocks-and-hashes",
+        price: 1200,
+        currency: "NGN",
+        description: "Master the fundamentals of blockchain technology with this...",
+        image: "/images/card21.png",
+        category: "card"
+      },
+      {
+        id: 3,
+        title: "Into the Cryptoverse",
+        slug: "into-the-cryptoverse",
+        price: 1200,
+        currency: "NGN",
+        description: "Journey through the multiverse of cryptocurrency in this never-skip ca...",
+        image: "/images/card3.png",
+        category: "card"
+      },
+      {
+        id: 4,
+        title: "Web3 Trivia Online",
+        slug: "web3-trivia-online",
+        price: 0,
+        currency: "NGN",
+        description: "Play the ultimate Web3 trivia game online with friends from around the...",
+        image: "/images/card4.png",
+        category: "online"
+      }
+    ];
+    
+    // Join cart items with game data
+    const cartWithGames = cartItems.map(item => {
+      const game = games.find(g => g.id === item.gameId);
+      return {
+        ...item,
+        game: game
+      };
+    });
+    
+    return res.status(200).json(cartWithGames);
   }
 
   if (req.method === 'POST') {
