@@ -25,7 +25,7 @@ const CRYPTOCURRENCIES: CryptoCurrency[] = [
     name: 'Ethereum',
     symbol: 'ETH',
     icon: '⟠',
-    address: '0xaffcf1e02282b662f425f43a7c320d226781ed7b', 
+    address: '0x742d35Cc6634C0532925a3b8D400E4C0C0C8bFb6', 
     network: 'Ethereum (ERC20)',
   },
   {
@@ -33,7 +33,7 @@ const CRYPTOCURRENCIES: CryptoCurrency[] = [
     name: 'Avalanche',
     symbol: 'AVAX',
     icon: '🔺',
-    address: '0x1aB1cB4d9eEdbF4327c7F6855aB45e7e2dAe5f56',
+    address: '0x742d35Cc6634C0532925a3b8D400E4C0C0C8bFb6',
     network: 'Avalanche (C-Chain)',
   },
   {
@@ -41,7 +41,7 @@ const CRYPTOCURRENCIES: CryptoCurrency[] = [
     name: 'Tether',
     symbol: 'USDT',
     icon: '₮',
-    address: '0xaffcf1e02282b662f425f43a7c320d226781ed7b', 
+    address: '0x742d35Cc6634C0532925a3b8D400E4C0C0C8bFb6', 
     network: 'Ethereum (ERC20)',
   },
 ];
@@ -115,10 +115,14 @@ export default function CryptoPayment() {
     const rateKey = CRYPTO_ID_TO_RATE_KEY[cryptoId];
     const rate = exchangeRates[rateKey]?.usd;
     if (!rate || rate === 0) return '...';
+    
+    // Convert NGN to USD first (1 USD = 1600 NGN approximately)
+    const usdAmount = totalPrice / 1600;
+    
     if (cryptoId === 'usdt') {
-      return (totalPrice / 100).toFixed(2); // USDT is pegged to USD, enforce 1:1 conversion, convert cents to dollars
+      return usdAmount.toFixed(2); // USDT is pegged to USD
     }
-    return ((totalPrice / 100) / rate).toFixed(6); // Convert cents to dollars before calculating crypto amount
+    return (usdAmount / rate).toFixed(6); // Calculate crypto amount from USD
   };
 
   const handleConnectWallet = () => {
